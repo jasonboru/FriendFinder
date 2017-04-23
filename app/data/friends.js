@@ -1,90 +1,118 @@
-var friendsList = [
-  {
-    "name": "Ned Stark",
-    "photo": "/images/ned-stark.jpg",
-    "scores": [3, 3, 5, 2, 5, 3, 5, 2, 5, 1]
-  },
-  {
-    "name": "Oberyn Martel ",
-    "photo": "/images/oberyn-martel.jpg",
-    "scores": [2, 1, 5, 1, 5, 5, 4, 3, 2, 5]
-  },
-  {
-    "name": "Melisandre",
-    "photo": "images/melisandre.jpg",
-    "scores": [5, 5, 5, 5, 2, 5, 1, 5, 3, 2]
-  },
-  {
-    "name": "Samwell Tarly",
-    "photo": "images/samwell-tarly.jpg",
-    "scores": [1, 5, 3, 2, 5, 1, 2, 4, 5, 1]
-  },
-  {
-    "name": "Theon Greyjoy",
-    "photo": "images/theon-greyjoy.jpg",
-    "scores": [5, 1, 1, 2, 2, 5, 4, 1, 3, 4]
-  },
-  {
-    "name": "Jamie Lannister",
-    "photo": "images/jamie-lannister.jpg",
-    "scores": [2, 2, 3, 2, 1, 5, 4, 1, 2, 2]
-  },
-  {
-    "name": "Bronn",
-    "photo": "images/bronn.jpg",
-    "scores": [2, 1, 5, 1, 4, 5, 2, 1, 3, 3]
-  },
-  {
-    "name": "Littlefinger",
-    "photo": "images/littlefinger.jpg",
-    "scores": [5, 5, 4, 5, 2, 3, 2, 1, 2, 4]
-  },
-  {
-    "name": "The Hound",
-    "photo": "images/the-hound.jpg",
-    "scores": [1, 1, 5, 2, 2, 5, 1, 3, 4, 1]
-  },
-  {
-    "name": "Varys",
-    "photo": "images/varys.jpg",
-    "scores": [5, 5, 5, 5, 1, 1, 1, 1, 2, 4]
-  },
-  {
-    "name": "Jon Snow",
-    "photo": "images/jon-snow.jpg",
-    "scores": [2, 1, 4, 1, 5, 3, 5, 2, 5, 1]
-  },
-  {
-    "name": "Sansa Stark",
-    "photo": "images/sansa-stark.jpg",
-    "scores": [3, 4, 3, 3, 3, 3, 4, 2, 2, 4]
-  },
-  {
-    "name": "Joffrey Baratheon",
-    "photo": "images/joffrey-baratheon.jpg",
-    "scores": [5, 3, 1, 2, 1, 5, 1, 1, 1, 4]
-  },
-  {
-    "name": "Cersei Lannister",
-    "photo": "images/cersei-lannister.jpg",
-    "scores": [5, 5, 2, 3, 1, 5, 4, 1, 1, 2]
-  },
-  {
-    "name": "Arya Stark",
-    "photo": "images/arya-stark.jpg",
-    "scores": [2, 2, 5, 3, 4, 4, 4, 1, 4, 1]
-  },
-  {
-    "name": "Tyrion Lannister",
-    "photo": "images/tyrion-lannister.jpg",
-    "scores": [4, 5, 4, 3, 2, 4, 1, 2, 5]
-  },
-  {
-    "name": "Daenerys Targaryen",
-    "photo": "images/daenerys-targeryen.jpg",
-    "scores": [5, 3, 5, 4, 5, 5, 2, 2, 1, 3]
-  }
-];
+const fs = require("fs");
 
+var file = './app/data/friendsList.json';
 
-module.exports = friendsList;
+//object passed in is the user entry
+function updateList (object) {
+
+	//if there is no friendsList.json file create one
+	if (!fs.existsSync(file)) {
+		fs.writeFileSync(file, "[" + JSON.stringify(object) + "]");
+	//else read the exisiting file
+	} else {
+
+		fs.readFile(file, 'utf-8', (err, data) => {
+			if (err) {
+				console.log(err);
+			}
+
+			var arr = [];
+			//parse the json data into an array
+			if (data) {
+				arr = JSON.parse(data);
+			}
+			//push the user information into the new array
+			arr.push(object);
+			//write the new updated array overtop the friendsList file
+			fs.writeFile(file, JSON.stringify(arr, null, 5), (err) => {
+					if (err) console.log(err);
+
+				});
+
+		});
+	}
+}
+//function to grab the current list of friends
+function getCurrentList() {
+
+	return new Promise((resolve, reject)=>{
+		//read the friendsList.json file
+		fs.readFile(file, 'utf-8', (err, data) => {
+			//if there is an error reject
+			if (err) {
+				reject(err);
+			}
+			var arr = [];
+			//if data is returned then parse the json into the empty array
+			if (data) {
+				arr = JSON.parse(data);
+			}
+			//resolve with the new arrays information
+			resolve(arr);
+		});
+	});
+}
+
+// function to proform logic finding the best matching friend
+function matchToFriend (obj) {
+	//obj is the user entry object
+
+	return new Promise((resolve, reject) => {
+
+		getCurrentList().then((allFriends)=>{
+			//allFriends is the array of all people
+
+			//userScores is the array of the users scores
+			var userScores = obj.scores;
+
+			userScores.map((e)=> parseInt(e));
+			//changes the list of answers into numbers
+
+			var closestFriend = {
+				name: '',
+				photo: '',
+				scores: []
+			}
+
+			var lowestDiff = 50;
+
+			//e is current vale and i is index
+			allFriends.forEach((e, i)=>{
+				//diffBetween computes the lowestDiff in scores between the user and each person
+				var diffBetween = e.scores.map((e)=> parseInt(e))
+					//reduces the scores array to a single value
+					.reduce((accumulator, value, index)=> {
+						return accumulator + Math.abs(value - userScores[index]);
+					});
+
+					console.log('______________________________');
+					console.log(i+": "+e.name +" "+ "has a difference between the user of "+diffBetween);
+					console.log('______________________________');
+
+				//if the difference between is lowerer than the previous lowest difference...
+				if (diffBetween < lowestDiff) {
+					//lowestDiff becomes the current diffBetween
+					lowestDiff = diffBetween;
+					//closestFriend becomes the friend at this index (will be replaced if another is lower later in the loop)
+					closestFriend = allFriends[i];
+
+					console.log("***********"+e.name +" "+"is now the closest match with a diff of "+lowestDiff);
+					console.log('______________________________');
+
+				}
+			});
+			//call function to update the frinds list with user info
+			updateList(obj);
+			//resolve with the closestFriend match
+			resolve(closestFriend);
+			//if error reject
+		}).catch((err)=>{if(err) reject(err);});
+
+	});
+
+}
+
+//export functions for use in apiRoutes.js
+exports.updateList = updateList;
+exports.matchToFriend = matchToFriend;
+exports.getCurrentList = getCurrentList;
