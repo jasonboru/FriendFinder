@@ -35,3 +35,9 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# Mac file
+.DS_Store
+
+#lock friends list to keep it organized
+/app/data/friendsList.json
