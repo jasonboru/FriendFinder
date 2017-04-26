@@ -20,6 +20,10 @@ body {
 	font-size: 600%;
 }
 
+.jumbotron>hr {
+	border: 1px solid #dadada;
+}
+
 h2 {
 	color: #fff;
 	font-style: bold;
@@ -34,17 +38,13 @@ a {
 	color: #fff;
 }
 
-a:hover {
-	text-decoration: none;
-	color: #dadada;
-}
-
 a:visited {
 	color: #fff;
 }
 
-.jumbotron>hr {
-	border: 1px solid #231f20;
+a:hover {
+	text-decoration: none;
+	color: #dadada;
 }
 
 .btn-primary {

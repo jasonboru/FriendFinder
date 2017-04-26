@@ -40,3 +40,5 @@ jspm_packages
 .DS_Store
 
 #lock friends list to keep it organized
+/app/data/friendsList.json
+/app/data/charcterList.json
