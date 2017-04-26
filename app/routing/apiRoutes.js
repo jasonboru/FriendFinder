@@ -1,4 +1,5 @@
 const friends = require("../data/friends.js");
+const characters = require("../data/characters.js");
 
 module.exports = function(app){
 
@@ -13,6 +14,21 @@ module.exports = function(app){
 
 		friends.matchToFriend(req.body).then((friend)=>{
 			res.json(friend);
+		}).catch((err)=>{if (err) console.log(err);});
+
+	});
+
+	app.get('/api/characters', function (req, res) {
+
+		characters.getCurrentCharList()
+			.then( (allCharacters)=> res.json(allCharacters) )
+			.catch( (err)=> {if (err) console.log(err)} );
+	});
+
+	app.post('/api/characters', function (req, res){
+
+		characters.matchToCharacter(req.body).then((character)=>{
+			res.json(character);
 		}).catch((err)=>{if (err) console.log(err);});
 
 	});
