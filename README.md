@@ -6,7 +6,7 @@
 
 ### Overview
 
-In this activity, I was asked to build a compatibility-based "FriendFinder" application -- kind of like a "dating app". I decided to give it a kind of theme, so my app has two features. It will let the user submit a form of 10 questions and let them know which Game of Thrones character they best match up to. It also gives them an option to match up to other fans. If they fill out the fan based survey the app will store their name and image link for furture searches by other users. This full-stack site takes in results of the users' surveys, then compares their answers with those from other users(or characters). The app will then display the name and picture of the user(or character) with the best overall match.
+In this activity, I was asked to build a compatibility-based "FriendFinder" application -- kind of like a "dating app". I decided to give mine a Game of Thrones theme, and my app has two features. It will let the user submit a form of 10 questions and let them know which Game of Thrones character they best match up to. It also gives them an option of a another survey to match up to other fans. If they fill out the fan based survey the app will store their name and image link for furture searches by other users. This full-stack site takes in results of the users' surveys, then compares their answers with those from other users(or characters). The app will then display the name and picture of the user(or character) with the best overall match.
 
 I used Express to handle routing. Check out the app running on heroku here:
 
@@ -18,8 +18,6 @@ I used Express to handle routing. Check out the app running on heroku here:
 4. Go to your browser and type http://localhost:3121/ into the address bar to bring up the app.
 
 ---
-
-### Before You Begin
 
 ### Instructions
 
@@ -47,7 +45,7 @@ Submitting on the Fan Survey will pop up a modal of the Fan on the API friends l
 
 ![FanModal](/app/public/assets/images/screenshot_fanmodal.jpg)
 
-5. There are nav buttons and the bottom of each page. API Characters List will bring up the json list of all stored characters. API Friends List will bring up the json of all Fans that previously submitted their info. Repo will take the user to my Github repository hosting this project. Home will return the user to the home.html page.
+5. There are nav buttons and the bottom of each page. _API Characters List_ will bring up the json list of all stored characters. _API Friends List_ will bring up the json of all Fans that previously submitted their info. _Repo_ will take the user to my Github repository hosting this project. _Home_ will return the user to the home.html page.
 
 ![Nav](/app/public/assets/images/screenshot_nav.jpg)
 
@@ -57,6 +55,8 @@ Submitting on the Fan Survey will pop up a modal of the Fan on the API friends l
 ## Known Issues & TODO Items
 
   * Add additional fields for user information.
+
+  * Find ways to DRY up code better. App works, but there is some repetition that could likely be streamlined.
 
 
 - - -
