@@ -57,3 +57,8 @@ a:hover {
 	background-color: #83a9b4;
 	border-color: #83a9b4;
 }
+
+.button-space {
+	margin-top: 10px;
+	margin-right: 10px;
+}
