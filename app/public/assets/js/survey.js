@@ -62,3 +62,7 @@ $("#submit").on("click", function(){
 
 	return false;
 });
+
+$('#resultsModal').on('hidden.bs.modal', function () {
+  window.location.reload(true);
+})
